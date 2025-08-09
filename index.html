@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Générateur de Template RP</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Formulaire -->
+      <div class="form-section">
+        <h2>🎭 Générateur de Template RP</h2>
+        <form id="rpForm">
+          <div class="form-group">
+            <label for="background">🖼️ Lien du background :</label>
+            <input
+              type="url"
+              id="background"
+              placeholder="https://exemple.com/background.jpg"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="banner">🏞️ Lien de la bannière :</label>
+            <input
+              type="url"
+              id="banner"
+              placeholder="https://exemple.com/banner.jpg"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="characterName">👤 Nom du personnage :</label>
+            <input type="text" id="characterName" placeholder="Prénom Nom" />
+          </div>
+
+          <div class="form-group">
+            <label for="timeType">⏱️ Époque :</label>
+            <select id="timeType">
+              <option value="PRÉSENT">PRÉSENT</option>
+              <option value="FLASHBACK">FLASHBACK</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="year">📅 Année :</label>
+            <input type="text" id="year" placeholder="1630" />
+          </div>
+
+          <div class="form-group">
+            <label for="participants">👥 Participants (un par ligne) :</label>
+            <textarea
+              id="participants"
+              rows="3"
+              placeholder="PJ 1&#10;PJ 2&#10;PJ 3"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="content">📝 Contenu :</label>
+            <textarea
+              id="content"
+              rows="8"
+              placeholder="Votre texte RP ici..."
+            ></textarea>
+          </div>
+
+          <button type="button" id="copyCode" class="copy-btn">
+            📋 Copier le code
+          </button>
+        </form>
+      </div>
+
+      <!-- Prévisualisation -->
+      <div class="preview-section">
+        <h3>👀 Prévisualisation :</h3>
+        <div id="preview"></div>
+
+        <h3>💻 Code HTML généré :</h3>
+        <textarea id="generatedCode" readonly></textarea>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
