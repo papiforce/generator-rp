@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Générateur de Template RP</title>
+    <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
@@ -16,6 +17,14 @@
       <div class="form-section">
         <h2>🎭 Générateur de Template RP</h2>
         <form id="rpForm">
+          <div class="form-group">
+            <label for="template">📘 Template</label>
+            <select id="template">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+            </select>
+          </div>
+
           <div class="form-group">
             <label for="background">🖼️ Lien du background :</label>
             <input
@@ -40,9 +49,14 @@
           </div>
 
           <div class="form-group">
+            <label for="title">✍️ Titre du RP :</label>
+            <input type="text" id="title" placeholder="Titre ici" />
+          </div>
+
+          <div class="form-group">
             <label for="timeType">⏱️ Époque :</label>
             <select id="timeType">
-              <option value="PRÉSENT">PRÉSENT</option>
+              <option value="PRÉSENT" selected>PRÉSENT</option>
               <option value="FLASHBACK">FLASHBACK</option>
             </select>
           </div>
@@ -57,7 +71,7 @@
             <textarea
               id="participants"
               rows="3"
-              placeholder="PJ 1&#10;PJ 2&#10;PJ 3"
+              placeholder="PJ 1, PJ 2 & PJ3"
             ></textarea>
           </div>
 
