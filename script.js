@@ -138,10 +138,10 @@ document.addEventListener("DOMContentLoaded", function () {
 --><div style="margin: 32px 40px;"><!--
 --><div style="margin: 32px auto; width: max-content; display: flex; align-items: center; gap: 16px;"><hr style="height: 1px; width: 180px; border-top-color: #000 !important;" /><span>∞</span><hr style="height: 1px; width: 180px; border-top-color: #000 !important;" /></div><!--
 
---><p style="font-size: 11px; text-align: justify; margin: 0;">${content.replace(
+--><div style="font-size: 11px; text-align: justify; margin: 0;">${content.replace(
       /\n/g,
       "<br/>"
-    )}</p><!--
+    )}</div><!--
 
 -->${
       participants !== ""
