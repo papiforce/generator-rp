@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <p style="font-size: 12px; text-align: center;">Bourbon | バーボン</p>`;
     }
 
-    return `<style>@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Petrona:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&display=swap); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; }</style><!--
+    return `<style>@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Petrona:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&display=swap); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .codebox { background-color: #a0a0a0 !important; padding: 12px !important; } .spoiler_title { color: #fff !important; font-size: 11px !important; } .spoiler_content { background-color: #b3b3b3 !important; color: #fff !important; font-weight: 500 !important; }</style><!--
 
 --><div style="font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; max-width: 580px; background: #f2f2f2; margin: 0 auto; color: #000; position: relative;"><!--
 --><div style="position: relative; display: flex; justify-content: center; align-items: center; height: 220px; background-position: center; background-size: cover !important; background: url('${banner}'); filter: grayscale(90%);"><div style="position: absolute; bottom: 0; background: linear-gradient(360deg,rgba(242, 242, 242, 1) 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
