@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     position: "top",
     darkerBanner: false,
     coloredBanner: false,
+    fontFamily: "montserrat",
     characterName: "Nom du Personnage",
     title: "Titre ici",
     timeType: "PRÉSENT",
@@ -49,6 +50,8 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("darkerBanner").checked = data.darkerBanner;
         if (data.coloredBanner)
           document.getElementById("coloredBanner").checked = data.coloredBanner;
+        if (data.fontFamily)
+          document.getElementById("fontFamily").value = data.fontFamily;
         if (data.characterName)
           document.getElementById("characterName").value = data.characterName;
         if (data.logo) document.getElementById("logo").value = data.logo;
@@ -74,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const banner = document.getElementById("banner").value;
     const darkerBanner = document.getElementById("darkerBanner").checked;
     const coloredBanner = document.getElementById("coloredBanner").checked;
+    const fontFamily = document.getElementById("fontFamily").value;
     const characterName = document.getElementById("characterName").value;
     const logo = document.getElementById("logo").value;
 
@@ -83,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
       banner,
       darkerBanner,
       coloredBanner,
+      fontFamily,
       characterName,
       logo,
       savedAt: new Date().toISOString(),
@@ -140,6 +145,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const coloredBanner =
       document.getElementById("coloredBanner").checked ||
       defaultValues.coloredBanner;
+    const fontFamily =
+      document.getElementById("fontFamily").value || defaultValues.fontFamily;
     const position = document.getElementById("position").value;
     const characterName =
       document.getElementById("characterName").value ||
@@ -181,9 +188,9 @@ document.addEventListener("DOMContentLoaded", function () {
 <p style="font-size: 12px; text-align: center;">Bourbon | バーボン</p>`;
     }
 
-    return `<style>@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Petrona:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&display=swap); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .codebox { background-color: #a0a0a0 !important; padding: 12px !important; } .spoiler_title { color: #fff !important; font-size: 11px !important; } .spoiler_content { background-color: #b3b3b3 !important; color: #fff !important; font-weight: 500 !important; font-size: 10px !important; }</style><!--
+    return `<style>@import url('@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif+JP:wght@200..900&family=Petrona:ital,wght@0,100..900;1,100..900&display=swap');'); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .montserrat { font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; } .noto-serif-jp { font-family: 'Noto Serif JP', serif; font-optical-sizing: auto; font-style: normal; } .codebox { background-color: #a0a0a0 !important; padding: 12px !important; } .spoiler_title { color: #fff !important; font-size: 11px !important; } .spoiler_content { background-color: #b3b3b3 !important; color: #fff !important; font-weight: 500 !important; font-size: 10px !important; }</style><!--
 
---><div style="font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; max-width: ${
+--><div class="${fontFamily}" style="max-width: ${
       fullWidth === true ? "800px" : "580px"
     }; background: #f2f2f2; margin: 0 auto; color: #000; position: relative;"><!--
 --><div style="position: relative; display: flex; justify-content: center; align-items: center; height: 220px; background-position: ${position} !important; background-size: cover !important; background: ${
