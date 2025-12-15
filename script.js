@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     background:
       "https://i.pinimg.com/736x/83/20/90/8320900ef7e875b34884a72134d76324.jpg",
     banner: "https://4kwallpapers.com/images/walls/thumbs_2t/15328.jpeg",
+    position: "top",
     characterName: "Nom du Personnage",
     title: "Titre ici",
     timeType: "PRÉSENT",
@@ -97,6 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("background").value || defaultValues.background;
     const banner =
       document.getElementById("banner").value || defaultValues.banner;
+    const position = document.getElementById("position").value;
     const characterName =
       document.getElementById("characterName").value ||
       defaultValues.characterName;
@@ -121,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return `<style>
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 </style>
-<div style="background: url('${background}'); background-size: cover; padding: 20px; border-radius: 8px; max-width: 720px; margin: 0 auto;"><div style="position: relative; display: flex; gap: 16px; height: 200px;"><img src="${banner}" style="width: 100%; max-width: 464px; object-fit: cover; object-position: center; border-radius: 12px 12px 0 0;" /><img src="https://i.servimg.com/u/f64/20/62/43/80/jolly_11.jpg" style="max-width: 240px; max-height: 200px;" /><span style="font-size: 40px; font-style: italic; text-shadow: 1px 1px 2px black; position: absolute; bottom: -32px; left: 50%; transform: translateX(-50%); color: white; white-space: nowrap;">${characterName}</span></div>
+<div style="background: url('${background}'); background-size: cover; padding: 20px; border-radius: 8px; max-width: 720px; margin: 0 auto;"><div style="position: relative; display: flex; gap: 16px; height: 200px;"><img src="${banner}" style="width: 100%; max-width: 464px; object-fit: cover; object-position: ${position}; border-radius: 12px 12px 0 0;" /><img src="https://i.servimg.com/u/f64/20/62/43/80/jolly_11.jpg" style="max-width: 240px; max-height: 200px;" /><span style="font-size: 40px; font-style: italic; text-shadow: 1px 1px 2px black; position: absolute; bottom: -32px; left: 50%; transform: translateX(-50%); color: white; white-space: nowrap;">${characterName}</span></div>
 <div style="margin-top: 24px; display: flex; gap: 16px;"><div style="min-width: 180px; display: flex; flex-direction: column;"><p style="text-align: center; font-size: 16px; color: white;">Informations</p><hr style="border: 1px solid white; margin: 0 0 12px;"/><div style="font-family: 'Raleway', sans-serif;"><p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 2px; text-transform: uppercase;">${timeType}</p><p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 24px;">${year}</p></div><p style="text-align: center; font-size: 16px; color: white;">Participants</p><hr style="border: 1px solid white; margin: 0 0 12px;"/><div style="font-family: 'Raleway', sans-serif;">${participantsList}</div></div><div style="font-family: 'Raleway', sans-serif; font-size: 12px; text-align: justify; padding: 40px 32px; color: black; background: white; border-radius: 8px; max-height: 656px; overflow: scroll; width: 100%;">${content.replace(
         /\n/g,
         "<br/>"
@@ -132,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return `<style>@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Petrona:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&display=swap); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .codebox { background-color: #a0a0a0 !important; padding: 12px !important; } .spoiler_title { color: #fff !important; font-size: 11px !important; } .spoiler_content { background-color: #b3b3b3 !important; color: #fff !important; font-weight: 500 !important; font-size: 10px !important; }</style><!--
 
 --><div style="font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; max-width: 580px; background: #f2f2f2; margin: 0 auto; color: #000; position: relative;"><!--
---><div style="position: relative; display: flex; justify-content: center; align-items: center; height: 220px; background-position: center; background-size: cover !important; background: url('${banner}'); filter: grayscale(90%);"><div style="position: absolute; bottom: 0; background: linear-gradient(360deg,rgba(242, 242, 242, 1) 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
+--><div style="position: relative; display: flex; justify-content: center; align-items: center; height: 220px; background-position: ${position} !important; background-size: cover !important; background: url('${banner}'); filter: grayscale(90%);"><div style="position: absolute; bottom: 0; background: linear-gradient(360deg,rgba(242, 242, 242, 1) 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
 --><div style="padding: 8px; text-shadow: 1px 1px #000; color: #fff; display: flex; flex-direction: column; text-align: center;"><span style="font-size: 14px; text-transform: uppercase;">${characterName}</span><span class="petrona" style="font-size: 24px;">${title}</span><span style="font-size: 12px;">${timeType} - ${year}</span></div></div><!-- 
 
 --><div style="margin: 32px 40px;"><!--
