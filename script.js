@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
     darkerBanner: false,
     coloredBanner: false,
     fontFamily: "montserrat",
+    fontSize: 11,
+    bannerText: true,
     characterName: "Nom du Personnage",
     title: "Titre ici",
     timeType: "PRÉSENT",
@@ -52,6 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("coloredBanner").checked = data.coloredBanner;
         if (data.fontFamily)
           document.getElementById("fontFamily").value = data.fontFamily;
+        if (data.fontSize) document.getElementById("fontSize").value;
+        if (data.bannerText)
+          document.getElementById("bannerText").checked = data.bannerText;
         if (data.characterName)
           document.getElementById("characterName").value = data.characterName;
         if (data.logo) document.getElementById("logo").value = data.logo;
@@ -62,9 +67,16 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.removeItem("rpGeneratorData");
       }
     } else {
+      document.getElementById("fullWidth").checked = false;
       document.getElementById("background").value = "";
       document.getElementById("banner").value = "";
+      document.getElementById("darkerBanner").checked = false;
+      document.getElementById("coloredBanner").checked = false;
+      document.getElementById("fontFamily").value = "montserrat";
+      document.getElementById("fontSize").value = 11;
+      document.getElementById("bannerText").checked = true;
       document.getElementById("characterName").value = "";
+      document.getElementById("logo").value = "jr";
 
       console.log(`ℹ️ Aucune donnée sauvegardée pour le template ${template}`);
     }
@@ -78,6 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const darkerBanner = document.getElementById("darkerBanner").checked;
     const coloredBanner = document.getElementById("coloredBanner").checked;
     const fontFamily = document.getElementById("fontFamily").value;
+    const fontSize = document.getElementById("fontSize").value;
+    const bannerText = document.getElementById("bannerText").checked;
     const characterName = document.getElementById("characterName").value;
     const logo = document.getElementById("logo").value;
 
@@ -88,6 +102,8 @@ document.addEventListener("DOMContentLoaded", function () {
       darkerBanner,
       coloredBanner,
       fontFamily,
+      fontSize,
+      bannerText,
       characterName,
       logo,
       savedAt: new Date().toISOString(),
@@ -147,7 +163,10 @@ document.addEventListener("DOMContentLoaded", function () {
       defaultValues.coloredBanner;
     const fontFamily =
       document.getElementById("fontFamily").value || defaultValues.fontFamily;
+    const fontSize =
+      document.getElementById("fontSize").value || defaultValues.fontSize;
     const position = document.getElementById("position").value;
+    const bannerText = document.getElementById("bannerText").checked;
     const characterName =
       document.getElementById("characterName").value ||
       defaultValues.characterName;
@@ -181,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
       )}" style="max-width: 240px; max-height: 200px; ${
         logo === "jr-gray" ? "filter: grayscale(100%);" : ""
       }" /><span style="font-size: 40px; font-style: italic; text-shadow: 1px 1px 2px black; position: absolute; bottom: -32px; left: 50%; transform: translateX(-50%); color: white; white-space: nowrap;">${characterName}</span></div>
-<div style="margin-top: 24px; display: flex; gap: 16px;"><div style="min-width: 180px; display: flex; flex-direction: column;"><p style="text-align: center; font-size: 16px; color: white;">Informations</p><hr style="border: 1px solid white; margin: 0 0 12px;"/><div style="font-family: 'Raleway', sans-serif;"><p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 2px; text-transform: uppercase;">${timeType}</p><p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 24px;">${year}</p></div><p style="text-align: center; font-size: 16px; color: white;">Participants</p><hr style="border: 1px solid white; margin: 0 0 12px;"/><div style="font-family: 'Raleway', sans-serif;">${participantsList}</div></div><div style="font-family: 'Raleway', sans-serif; font-size: 12px; text-align: justify; padding: 40px 32px; color: black; background: white; border-radius: 8px; max-height: 656px; overflow: scroll; width: 100%;">${content.replace(
+<div style="margin-top: 24px; display: flex; gap: 16px;"><div style="min-width: 180px; display: flex; flex-direction: column;"><p style="text-align: center; font-size: 16px; color: white;">Informations</p><hr style="border: 1px solid white; margin: 0 0 12px;"/><div style="font-family: 'Raleway', sans-serif;"><p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 2px; text-transform: uppercase;">${timeType}</p><p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 24px;">${year}</p></div><p style="text-align: center; font-size: 16px; color: white;">Participants</p><hr style="border: 1px solid white; margin: 0 0 12px;"/><div style="font-family: 'Raleway', sans-serif;">${participantsList}</div></div><div style="font-family: 'Raleway', sans-serif; font-size: ${fontSize}px; text-align: justify; padding: 40px 32px; color: black; background: white; border-radius: 8px; max-height: 656px; overflow: scroll; width: 100%;">${content.replace(
         /\n/g,
         "<br/>"
       )}</div></div></div>
@@ -200,7 +219,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }url('${banner}'); filter: grayscale(${
       coloredBanner === true ? "0" : "90%"
     });"><div style="position: absolute; bottom: 0; background: linear-gradient(360deg,rgba(242, 242, 242, 1) 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
---><div style="padding: 8px; text-shadow: 1px 1px #000; color: #fff; display: flex; flex-direction: column; text-align: center;"><span style="font-size: 14px; text-transform: uppercase;">${characterName}</span><span class="petrona" style="font-size: 24px;">${title}</span><span style="font-size: 12px;">${timeType} - ${year}</span></div></div><!-- 
+-->${
+      bannerText === true
+        ? `<div style="padding: 8px; text-shadow: 1px 1px #000; color: #fff; display: flex; flex-direction: column; text-align: center;"><span style="font-size: 14px; text-transform: uppercase;">${characterName}</span><span class="petrona" style="font-size: 24px;">${title}</span><span style="font-size: 12px;">${timeType} - ${year}</span></div>`
+        : ""
+    }</div><!-- 
 
 --><div style="margin: 32px 40px;"><!--
 --><div style="margin: ${
@@ -213,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
         : ""
     }<!--
 
---><div class="${fontFamily}" style="font-size: 11px; text-align: justify; margin: 0;">${content.replace(
+--><div class="${fontFamily}" style="font-size: ${fontSize}px; text-align: justify; margin: 0;">${content.replace(
       /\n/g,
       "<br/>"
     )}</div><!--
@@ -257,6 +280,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const darkerBannerField = document
       .getElementById("darkerBanner")
       .closest(".form-group");
+    const fontFamilyField = document
+      .getElementById("fontFamily")
+      .closest(".form-group");
     const titleField = document.getElementById("title").closest(".form-group");
     const participantsField = document.getElementById("participants");
     const placeField = document.getElementById("place").closest(".form-group");
@@ -264,25 +290,32 @@ document.addEventListener("DOMContentLoaded", function () {
     const coloredBannerField = document
       .getElementById("coloredBanner")
       .closest(".form-group");
+    const bannerText = document
+      .getElementById("bannerText")
+      .closest(".form-group");
 
     if (template === "2") {
       fullWidthField.style.display = "block";
       backgroundField.style.display = "none";
       darkerBannerField.style.display = "block";
+      fontFamilyField.style.display = "block";
       titleField.style.display = "block";
       participantsField.placeholder = "PJ 1, PJ 2 & PJ3";
       placeField.style.display = "block";
       logo.value = "tampon";
       coloredBannerField.style.display = "block";
+      bannerText.style.display = "block";
     } else {
       fullWidthField.style.display = "none";
       backgroundField.style.display = "block";
       darkerBannerField.style.display = "none";
+      fontFamilyField.style.display = "none";
       titleField.style.display = "none";
       participantsField.placeholder = "PJ 1\nPJ 2\nPJ 3";
       placeField.style.display = "none";
       logo.value = "jr";
       coloredBannerField.style.display = "none";
+      bannerText.style.display = "none";
     }
   };
 
@@ -338,6 +371,21 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleFieldsByTemplate();
     loadSavedData();
     updatePreview();
+  });
+
+  document.getElementById("bannerText").addEventListener("change", () => {
+    const value = !document.getElementById("bannerText").checked;
+
+    document
+      .getElementById("characterName")
+      .closest(".form-group").style.display = value ? "none" : "block";
+    document.getElementById("title").closest(".form-group").style.display =
+      value ? "none" : "block";
+    document.getElementById("timeType").closest(".form-group").style.display =
+      value ? "none" : "block";
+    document.getElementById("year").closest(".form-group").style.display = value
+      ? "none"
+      : "block";
   });
 
   document.querySelectorAll(".collapse > p").forEach((collapseTitle) => {
