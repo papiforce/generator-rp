@@ -27,16 +27,13 @@ body {
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
+  max-height: max-content;
 }
 
 .form-section h2 {
   margin-bottom: 25px;
   color: #333;
   text-align: center;
-}
-
-.form-group {
-  margin-bottom: 18px;
 }
 
 .one-line {
@@ -79,6 +76,60 @@ body {
 .form-group textarea {
   resize: vertical;
   font-family: inherit;
+}
+
+.collapse {
+  overflow: hidden;
+  transition: all 0.3s ease-out;
+}
+
+.collapse > p {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px;
+  margin: 16px 0;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 8px;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.collapse > p:hover {
+  background: linear-gradient(45deg, #764ba2, #667eea);
+}
+
+.collapse.collapsed .collapse-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.collapse.expanded .collapse-content {
+  max-height: 2000px;
+  opacity: 1;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.collapse.collapsed > p::after {
+  content: "+";
+  font-size: 16px;
+  /* font-weight: bold; */
+}
+
+.collapse.expanded > p::after {
+  content: "-";
+  font-size: 16px;
+  /* font-weight: bold; */
 }
 
 .switch {

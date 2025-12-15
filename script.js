@@ -255,6 +255,15 @@ document.addEventListener("DOMContentLoaded", function () {
     updatePreview();
   });
 
+  document.querySelectorAll(".collapse > p").forEach((collapseTitle) => {
+    collapseTitle.addEventListener("click", function () {
+      const collapseDiv = this.parentElement;
+
+      collapseDiv.classList.toggle("collapsed");
+      collapseDiv.classList.toggle("expanded");
+    });
+  });
+
   copyBtn.addEventListener("click", function () {
     generatedCode.select();
     document.execCommand("copy");
