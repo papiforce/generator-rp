@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return `<style>@import url('@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif+JP:wght@200..900&family=Petrona:ital,wght@0,100..900;1,100..900&display=swap');'); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .montserrat { font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; } .noto-serif-jp { font-family: 'Noto Serif JP', serif; font-optical-sizing: auto; font-style: normal; } .codebox { background-color: #a0a0a0 !important; padding: 12px !important; } .spoiler_title { color: #fff !important; font-size: 11px !important; } .spoiler_content { background-color: #b3b3b3 !important; color: #fff !important; font-weight: 500 !important; font-size: 10px !important; }</style><!--
 
---><div class="${fontFamily}" style="max-width: ${
+--><div class="montserrat" style="max-width: ${
       fullWidth === true ? "800px" : "580px"
     }; background: #f2f2f2; margin: 0 auto; color: #000; position: relative;"><!--
 --><div style="position: relative; display: flex; justify-content: center; align-items: center; height: 220px; background-position: ${position} !important; background-size: cover !important; background: ${
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
         : ""
     }<!--
 
---><div style="font-size: 11px; text-align: justify; margin: 0;">${content.replace(
+--><div class="${fontFamily}" style="font-size: 11px; text-align: justify; margin: 0;">${content.replace(
       /\n/g,
       "<br/>"
     )}</div><!--
