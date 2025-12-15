@@ -1,9 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("rpForm");
   const preview = document.getElementById("preview");
+  const contentTextarea = document.getElementById("content");
+  const characterColor = document.getElementById("characterColor");
   const generatedCode = document.getElementById("generatedCode");
   const copyBtn = document.getElementById("copyCode");
   const saveBtn = document.getElementById("saveData");
+
+  let selectedText = "";
+  let selectionStart = 0;
+  let selectionEnd = 0;
 
   const defaultValues = {
     fullWidth: false,
@@ -13,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     banner: "https://4kwallpapers.com/images/walls/thumbs_2t/15328.jpeg",
     position: "top",
     darkerBanner: false,
+    coloredBanner: false,
     characterName: "Nom du Personnage",
     title: "Titre ici",
     timeType: "PRÉSENT",
@@ -33,11 +40,18 @@ document.addEventListener("DOMContentLoaded", function () {
       try {
         const data = JSON.parse(savedData);
 
+        if (data.fullWidth)
+          document.getElementById("fullWidth").checked = data.fullWidth;
         if (data.background)
           document.getElementById("background").value = data.background;
         if (data.banner) document.getElementById("banner").value = data.banner;
+        if (data.darkerBanner)
+          document.getElementById("darkerBanner").checked = data.darkerBanner;
+        if (data.coloredBanner)
+          document.getElementById("coloredBanner").checked = data.coloredBanner;
         if (data.characterName)
           document.getElementById("characterName").value = data.characterName;
+        if (data.logo) document.getElementById("logo").value = data.logo;
 
         console.log(`✅ Données chargées pour le template ${template}`);
       } catch (error) {
@@ -54,11 +68,12 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const saveData = () => {
-    const fullWidth = document.getElementById("fullWidth").value;
+    const fullWidth = document.getElementById("fullWidth").checked;
     const template = document.getElementById("template").value;
     const background = document.getElementById("background").value;
     const banner = document.getElementById("banner").value;
     const darkerBanner = document.getElementById("darkerBanner").checked;
+    const coloredBanner = document.getElementById("coloredBanner").checked;
     const characterName = document.getElementById("characterName").value;
     const logo = document.getElementById("logo").value;
 
@@ -67,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
       background,
       banner,
       darkerBanner,
+      coloredBanner,
       characterName,
       logo,
       savedAt: new Date().toISOString(),
@@ -121,6 +137,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const darkerBanner =
       document.getElementById("darkerBanner").checked ||
       defaultValues.darkerBanner;
+    const coloredBanner =
+      document.getElementById("coloredBanner").checked ||
+      defaultValues.coloredBanner;
     const position = document.getElementById("position").value;
     const characterName =
       document.getElementById("characterName").value ||
@@ -171,7 +190,9 @@ document.addEventListener("DOMContentLoaded", function () {
       darkerBanner === true
         ? "linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), "
         : ""
-    }url('${banner}'); filter: grayscale(90%);"><div style="position: absolute; bottom: 0; background: linear-gradient(360deg,rgba(242, 242, 242, 1) 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
+    }url('${banner}'); filter: grayscale(${
+      coloredBanner === true ? "0" : "90%"
+    });"><div style="position: absolute; bottom: 0; background: linear-gradient(360deg,rgba(242, 242, 242, 1) 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
 --><div style="padding: 8px; text-shadow: 1px 1px #000; color: #fff; display: flex; flex-direction: column; text-align: center;"><span style="font-size: 14px; text-transform: uppercase;">${characterName}</span><span class="petrona" style="font-size: 24px;">${title}</span><span style="font-size: 12px;">${timeType} - ${year}</span></div></div><!-- 
 
 --><div style="margin: 32px 40px;"><!--
@@ -208,7 +229,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const updatePreview = () => {
     const code = generateCode();
     preview.innerHTML = code;
-    generatedCode.value = code.replaceAll("<br/>", "\n");
+
+    let codeWithBBCode = code;
+    const contentHTML = document.getElementById("content").value;
+    const contentBBCode = convertHTMLtoBBCode(contentHTML);
+
+    codeWithBBCode = codeWithBBCode.replace(contentHTML, contentBBCode);
+
+    generatedCode.value = codeWithBBCode.replaceAll("<br/>", "\n");
   };
 
   const toggleFieldsByTemplate = () => {
@@ -226,6 +254,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const participantsField = document.getElementById("participants");
     const placeField = document.getElementById("place").closest(".form-group");
     const logo = document.getElementById("logo");
+    const coloredBannerField = document
+      .getElementById("coloredBanner")
+      .closest(".form-group");
 
     if (template === "2") {
       fullWidthField.style.display = "block";
@@ -235,6 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
       participantsField.placeholder = "PJ 1, PJ 2 & PJ3";
       placeField.style.display = "block";
       logo.value = "tampon";
+      coloredBannerField.style.display = "block";
     } else {
       fullWidthField.style.display = "none";
       backgroundField.style.display = "block";
@@ -243,11 +275,57 @@ document.addEventListener("DOMContentLoaded", function () {
       participantsField.placeholder = "PJ 1\nPJ 2\nPJ 3";
       placeField.style.display = "none";
       logo.value = "jr";
+      coloredBannerField.style.display = "none";
     }
+  };
+
+  const convertHTMLtoBBCode = (htmlText) => {
+    return htmlText.replace(
+      /<span style="color:\s*([^;]+);\s*font-weight:\s*bold;">([^<]+)<\/span>/g,
+      "[color=$1][b]$2[/b][/color]"
+    );
   };
 
   form.addEventListener("input", updatePreview);
   form.addEventListener("change", updatePreview);
+
+  contentTextarea.addEventListener("select", function () {
+    selectedText = this.value.substring(this.selectionStart, this.selectionEnd);
+    selectionStart = this.selectionStart;
+    selectionEnd = this.selectionEnd;
+  });
+
+  contentTextarea.addEventListener("mouseup", function () {
+    if (this.selectionStart !== this.selectionEnd) {
+      selectedText = this.value.substring(
+        this.selectionStart,
+        this.selectionEnd
+      );
+      selectionStart = this.selectionStart;
+      selectionEnd = this.selectionEnd;
+    }
+  });
+
+  characterColor.addEventListener("change", function () {
+    const color = this.value;
+
+    if (!color || !selectedText) {
+      updatePreview();
+      return;
+    }
+
+    const htmlCode = `<span style="color: ${color}; font-weight: bold;">${selectedText}</span>`;
+
+    const beforeText = contentTextarea.value.substring(0, selectionStart);
+    const afterText = contentTextarea.value.substring(selectionEnd);
+
+    contentTextarea.value = beforeText + htmlCode + afterText;
+
+    selectedText = "";
+    this.value = "";
+
+    updatePreview();
+  });
 
   document.getElementById("template").addEventListener("change", () => {
     toggleFieldsByTemplate();

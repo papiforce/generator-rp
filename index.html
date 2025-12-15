@@ -18,10 +18,10 @@
         <h2>🎭 Générateur de Template RP</h2>
         <form id="rpForm">
           <div class="form-group">
-            <label for="template">📘 Template</label>
+            <label for="template">📘 Template :</label>
             <select id="template">
-              <option value="1" selected>1</option>
-              <option value="2">2</option>
+              <option value="1">1</option>
+              <option value="2" selected>2</option>
             </select>
           </div>
 
@@ -92,6 +92,19 @@
                   <p>Oui</p>
                 </div>
               </div>
+
+              <div class="form-group">
+                <label>Bannière colorée :</label>
+
+                <div class="one-line">
+                  <p>Non</p>
+                  <label class="switch" for="coloredBanner">
+                    <input type="checkbox" id="coloredBanner" />
+                    <span class="slider round"></span>
+                  </label>
+                  <p>Oui</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -146,6 +159,20 @@
                 ></textarea>
               </div>
             </div>
+          </div>
+
+          <div class="form-group">
+            <label for="characterColor">🗣️ Paroles de :</label>
+            <select id="characterColor">
+              <option value="">--- --- ---</option>
+              <option value="#9E3333">Tyr</option>
+              <option value="#9E4FE3">Sonya</option>
+              <option value="#FF4500">Jeshaay</option>
+              <option value="#3BB3B5">Jeshaay (Zoan - Serpent)</option>
+              <option value="#DEB887">Lem</option>
+              <option value="#990099">Nico Eliza</option>
+              <option value="#EB635C">Loreleï</option>
+            </select>
           </div>
 
           <div class="form-group" style="margin: 16px 0">
