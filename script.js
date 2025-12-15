@@ -6,11 +6,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const saveBtn = document.getElementById("saveData");
 
   const defaultValues = {
+    fullWidth: false,
     template: "1",
     background:
       "https://i.pinimg.com/736x/83/20/90/8320900ef7e875b34884a72134d76324.jpg",
     banner: "https://4kwallpapers.com/images/walls/thumbs_2t/15328.jpeg",
     position: "top",
+    darkerBanner: false,
     characterName: "Nom du Personnage",
     title: "Titre ici",
     timeType: "PRÉSENT",
@@ -52,15 +54,19 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const saveData = () => {
+    const fullWidth = document.getElementById("fullWidth").value;
     const template = document.getElementById("template").value;
     const background = document.getElementById("background").value;
     const banner = document.getElementById("banner").value;
+    const darkerBanner = document.getElementById("darkerBanner").checked;
     const characterName = document.getElementById("characterName").value;
     const logo = document.getElementById("logo").value;
 
     const dataToSave = {
+      fullWidth,
       background,
       banner,
+      darkerBanner,
       characterName,
       logo,
       savedAt: new Date().toISOString(),
@@ -97,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const handleLogo = (value) => {
-    if (value === "jr") {
+    if (["jr", "jr-gray"].includes(value)) {
       return "https://i.servimg.com/u/f64/20/62/43/80/jolly_11.jpg";
     }
 
@@ -105,11 +111,16 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const generateCode = () => {
+    const fullWidth =
+      document.getElementById("fullWidth").checked || defaultValues.fullWidth;
     const template = document.getElementById("template").value;
     const background =
       document.getElementById("background").value || defaultValues.background;
     const banner =
       document.getElementById("banner").value || defaultValues.banner;
+    const darkerBanner =
+      document.getElementById("darkerBanner").checked ||
+      defaultValues.darkerBanner;
     const position = document.getElementById("position").value;
     const characterName =
       document.getElementById("characterName").value ||
@@ -137,9 +148,13 @@ document.addEventListener("DOMContentLoaded", function () {
       return `<style>
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 </style>
-<div style="background: url('${background}'); background-size: cover; padding: 20px; border-radius: 8px; max-width: 720px; margin: 0 auto;"><div style="position: relative; display: flex; gap: 16px; height: 200px;"><img src="${banner}" style="width: 100%; max-width: 464px; object-fit: cover; object-position: ${position}; border-radius: 12px 12px 0 0;" /><img src="${handleLogo(
+<div style="background: url('${background}'); background-size: cover; padding: 20px; border-radius: 8px; max-width: ${
+        fullWidth === true ? "800px" : "720px"
+      }; margin: 0 auto;"><div style="position: relative; display: flex; gap: 16px; height: 200px;"><img src="${banner}" style="width: 100%; max-width: 464px; object-fit: cover; object-position: ${position}; border-radius: 12px 12px 0 0;" /><img src="${handleLogo(
         logo
-      )}" style="max-width: 240px; max-height: 200px;" /><span style="font-size: 40px; font-style: italic; text-shadow: 1px 1px 2px black; position: absolute; bottom: -32px; left: 50%; transform: translateX(-50%); color: white; white-space: nowrap;">${characterName}</span></div>
+      )}" style="max-width: 240px; max-height: 200px; ${
+        logo === "jr-gray" ? "filter: grayscale(100%);" : ""
+      }" /><span style="font-size: 40px; font-style: italic; text-shadow: 1px 1px 2px black; position: absolute; bottom: -32px; left: 50%; transform: translateX(-50%); color: white; white-space: nowrap;">${characterName}</span></div>
 <div style="margin-top: 24px; display: flex; gap: 16px;"><div style="min-width: 180px; display: flex; flex-direction: column;"><p style="text-align: center; font-size: 16px; color: white;">Informations</p><hr style="border: 1px solid white; margin: 0 0 12px;"/><div style="font-family: 'Raleway', sans-serif;"><p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 2px; text-transform: uppercase;">${timeType}</p><p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 24px;">${year}</p></div><p style="text-align: center; font-size: 16px; color: white;">Participants</p><hr style="border: 1px solid white; margin: 0 0 12px;"/><div style="font-family: 'Raleway', sans-serif;">${participantsList}</div></div><div style="font-family: 'Raleway', sans-serif; font-size: 12px; text-align: justify; padding: 40px 32px; color: black; background: white; border-radius: 8px; max-height: 656px; overflow: scroll; width: 100%;">${content.replace(
         /\n/g,
         "<br/>"
@@ -149,8 +164,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return `<style>@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Petrona:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600;1,700&display=swap); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .codebox { background-color: #a0a0a0 !important; padding: 12px !important; } .spoiler_title { color: #fff !important; font-size: 11px !important; } .spoiler_content { background-color: #b3b3b3 !important; color: #fff !important; font-weight: 500 !important; font-size: 10px !important; }</style><!--
 
---><div style="font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; max-width: 580px; background: #f2f2f2; margin: 0 auto; color: #000; position: relative;"><!--
---><div style="position: relative; display: flex; justify-content: center; align-items: center; height: 220px; background-position: ${position} !important; background-size: cover !important; background: url('${banner}'); filter: grayscale(90%);"><div style="position: absolute; bottom: 0; background: linear-gradient(360deg,rgba(242, 242, 242, 1) 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
+--><div style="font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; max-width: ${
+      fullWidth === true ? "800px" : "580px"
+    }; background: #f2f2f2; margin: 0 auto; color: #000; position: relative;"><!--
+--><div style="position: relative; display: flex; justify-content: center; align-items: center; height: 220px; background-position: ${position} !important; background-size: cover !important; background: ${
+      darkerBanner === true
+        ? "linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), "
+        : ""
+    }url('${banner}'); filter: grayscale(90%);"><div style="position: absolute; bottom: 0; background: linear-gradient(360deg,rgba(242, 242, 242, 1) 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
 --><div style="padding: 8px; text-shadow: 1px 1px #000; color: #fff; display: flex; flex-direction: column; text-align: center;"><span style="font-size: 14px; text-transform: uppercase;">${characterName}</span><span class="petrona" style="font-size: 24px;">${title}</span><span style="font-size: 12px;">${timeType} - ${year}</span></div></div><!-- 
 
 --><div style="margin: 32px 40px;"><!--
@@ -179,9 +200,9 @@ document.addEventListener("DOMContentLoaded", function () {
       logo
     )}" alt="jolly roger" style="position: absolute; width: ${
       participants !== "" ? "64px" : "48px"
-    }; border-radius: ${
-      logo === "jr" ? "100%" : "0"
-    }; left: 16px; bottom: 16px; transform: rotate(-17deg);" /></div>`;
+    }; border-radius: ${["jr", "jr-gray"].includes(logo) ? "100%" : "0"}; ${
+      logo === "jr-gray" ? "filter: grayscale(1);" : ""
+    } left: 16px; bottom: 16px; transform: rotate(-17deg);" /></div>`;
   };
 
   const updatePreview = () => {
@@ -191,31 +212,44 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const toggleFieldsByTemplate = () => {
+    const fullWidthField = document
+      .getElementById("fullWidth")
+      .closest(".form-group");
     const template = document.getElementById("template").value;
     const backgroundField = document
       .getElementById("background")
       .closest(".form-group");
+    const darkerBannerField = document
+      .getElementById("darkerBanner")
+      .closest(".form-group");
     const titleField = document.getElementById("title").closest(".form-group");
     const participantsField = document.getElementById("participants");
     const placeField = document.getElementById("place").closest(".form-group");
+    const logo = document.getElementById("logo");
 
     if (template === "2") {
+      fullWidthField.style.display = "block";
       backgroundField.style.display = "none";
+      darkerBannerField.style.display = "block";
       titleField.style.display = "block";
       participantsField.placeholder = "PJ 1, PJ 2 & PJ3";
       placeField.style.display = "block";
+      logo.value = "tampon";
     } else {
+      fullWidthField.style.display = "none";
       backgroundField.style.display = "block";
+      darkerBannerField.style.display = "none";
       titleField.style.display = "none";
       participantsField.placeholder = "PJ 1\nPJ 2\nPJ 3";
       placeField.style.display = "none";
+      logo.value = "jr";
     }
   };
 
   form.addEventListener("input", updatePreview);
   form.addEventListener("change", updatePreview);
 
-  document.getElementById("template").addEventListener("change", function () {
+  document.getElementById("template").addEventListener("change", () => {
     toggleFieldsByTemplate();
     loadSavedData();
     updatePreview();

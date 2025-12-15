@@ -26,6 +26,19 @@
           </div>
 
           <div class="form-group">
+            <label>Largeur de la fiche :</label>
+
+            <div class="one-line">
+              <p>Normal</p>
+              <label class="switch" for="fullWidth">
+                <input type="checkbox" id="fullWidth" />
+                <span class="slider round"></span>
+              </label>
+              <p>Large</p>
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="background">🖼️ Lien du background :</label>
             <input
               type="url"
@@ -52,6 +65,19 @@
               <option value="left">Gauche</option>
               <option value="right">Droite</option>
             </select>
+          </div>
+
+          <div class="form-group">
+            <label>Assombrir la bannière :</label>
+
+            <div class="one-line">
+              <p>Non</p>
+              <label class="switch" for="darkerBanner">
+                <input type="checkbox" id="darkerBanner" />
+                <span class="slider round"></span>
+              </label>
+              <p>Oui</p>
+            </div>
           </div>
 
           <div class="form-group">
@@ -108,6 +134,7 @@
             <label for="logo">🔰 Logo :</label>
             <select id="logo">
               <option value="jr" selected>Jolly roger</option>
+              <option value="jr-gray">Jolly roger (noir/blanc)</option>
               <option value="tampon">Tampon</option>
             </select>
           </div>
