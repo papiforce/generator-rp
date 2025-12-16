@@ -243,17 +243,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 -->${
       participants !== ""
-        ? `<p style="margin-top: 40px; font-size: 10px; font-style: italic; text-align: right; color: #a0a0a0; text-transform: lowercase;">feat. ${participants}.</p>`
+        ? `<p class="${fontFamily}" style="margin-top: 40px; font-size: ${
+            fontSize - 1
+          }px; font-style: italic; text-align: right; color: #a0a0a0; text-transform: lowercase;">feat. ${participants}.</p>`
         : ""
     }</div><!-- 
 
---><p style="text-align: center; font-size: 10px; font-weight: 400; padding-bottom: 40px; margin: 0;">Bourbon | バーボン</p><img src="${handleLogo(
+--><p class="montserrat" style="text-align: center; font-size: ${
+      fontFamily === "montserrat" ? fontSize - 1 : fontSize - 2
+    }px; font-weight: 400; padding-bottom: 40px; margin: 0;">Bourbon | バーボン</p><img src="${handleLogo(
       logo
-    )}" alt="jolly roger" style="position: absolute; width: ${
+    )}" alt="jolly roger" style="position: absolute; left: 16px; bottom: 16px; transform: rotate(-17deg); width: ${
       participants !== "" ? "64px" : "48px"
     }; border-radius: ${["jr", "jr-gray"].includes(logo) ? "100%" : "0"}; ${
       logo === "jr-gray" ? "filter: grayscale(1);" : ""
-    } left: 16px; bottom: 16px; transform: rotate(-17deg);" /></div>`;
+    }" /></div>`;
   };
 
   const updatePreview = () => {
