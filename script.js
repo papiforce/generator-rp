@@ -260,6 +260,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }" /></div>`;
   };
 
+  const convertHTMLtoBBCode = (htmlText) => {
+    return htmlText.replace(
+      /<span style="color:\s*([^;]+);\s*font-weight:\s*bold;">([^<]+)<\/span>/g,
+      "[color=$1][b]$2[/b][/color]"
+    );
+  };
+
   const updatePreview = () => {
     const code = generateCode();
     preview.innerHTML = code;
@@ -321,13 +328,6 @@ document.addEventListener("DOMContentLoaded", function () {
       coloredBannerField.style.display = "none";
       bannerText.style.display = "none";
     }
-  };
-
-  const convertHTMLtoBBCode = (htmlText) => {
-    return htmlText.replace(
-      /<span style="color:\s*([^;]+);\s*font-weight:\s*bold;">([^<]+)<\/span>/g,
-      "[color=$1][b]$2[/b][/color]"
-    );
   };
 
   form.addEventListener("input", updatePreview);
