@@ -269,12 +269,26 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   };
 
+  const convertBBCodeToHTML = (bbcodeText) => {
+    return bbcodeText.replace(
+      /\[color=([^\]]+)\]\[b\]([^\[]+)\[\/b\]\[\/color\]/g,
+      '<span style="color: $1; font-weight: bold;">$2</span>'
+    );
+  };
+
   const updatePreview = () => {
     const code = generateCode();
+    document.getElementById("content").value = convertBBCodeToHTML(
+      document.getElementById("content").value
+    );
+    const contentWithHTML = convertBBCodeToHTML(
+      document.getElementById("content").value
+    );
+
     preview.innerHTML = code;
 
     let codeWithBBCode = code;
-    const contentHTML = document.getElementById("content").value;
+    const contentHTML = contentWithHTML;
     const contentBBCode = convertHTMLtoBBCode(contentHTML);
 
     codeWithBBCode = codeWithBBCode.replace(contentHTML, contentBBCode);
