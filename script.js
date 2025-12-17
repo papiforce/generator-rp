@@ -232,7 +232,9 @@ document.addEventListener("DOMContentLoaded", function () {
       place !== ""
         ? `<!--
 
---><p style="font-size: 12px; font-weight: 500; font-style: italic; text-align: center; color: #a0a0a0;">${place}.</p><hr style="height: 1px; width: 100px; border-top-color: #000!important; margin: 20px auto 32px;" />`
+--><p class="${fontFamily}" style="font-size: ${
+            Number(fontSize) + 1
+          }px; font-weight: 500; font-style: italic; text-align: center; color: #a0a0a0;">${place}.</p><hr style="height: 1px; width: 100px; border-top-color: #000!important; margin: 20px auto 32px;" />`
         : ""
     }<!--
 
@@ -250,7 +252,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }</div><!-- 
 
 --><p class="montserrat" style="text-align: center; font-size: ${
-      fontFamily === "montserrat" ? fontSize - 1 : fontSize - 2
+      fontFamily === "montserrat" ? Number(fontSize) - 1 : Number(fontSize) - 2
     }px; font-weight: 400; padding-bottom: 40px; margin: 0;">Bourbon | バーボン</p><img src="${handleLogo(
       logo
     )}" alt="jolly roger" style="position: absolute; left: 16px; bottom: 16px; transform: rotate(-17deg); width: ${
