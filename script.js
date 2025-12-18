@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let selectionEnd = 0;
 
   const defaultValues = {
+    darkMode: false,
     fullWidth: false,
     template: "1",
     background:
@@ -43,6 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
       try {
         const data = JSON.parse(savedData);
 
+        if (data.darkMode)
+          document.getElementById("mode").checked = data.darkMode;
         if (data.fullWidth)
           document.getElementById("fullWidth").checked = data.fullWidth;
         if (data.background)
@@ -67,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.removeItem("rpGeneratorData");
       }
     } else {
+      document.getElementById("mode").value = "light";
       document.getElementById("fullWidth").checked = false;
       document.getElementById("background").value = "";
       document.getElementById("banner").value = "";
@@ -83,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const saveData = () => {
+    const darkMode = document.getElementById("mode").checked;
     const fullWidth = document.getElementById("fullWidth").checked;
     const template = document.getElementById("template").value;
     const background = document.getElementById("background").value;
@@ -96,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const logo = document.getElementById("logo").value;
 
     const dataToSave = {
+      darkMode,
       fullWidth,
       background,
       banner,
@@ -148,6 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const generateCode = () => {
+    const isDarkMode = document.getElementById("mode").checked;
     const fullWidth =
       document.getElementById("fullWidth").checked || defaultValues.fullWidth;
     const template = document.getElementById("template").value;
@@ -207,18 +214,40 @@ document.addEventListener("DOMContentLoaded", function () {
 <p style="font-size: 12px; text-align: center;">Bourbon | バーボン</p>`;
     }
 
-    return `<style>@import url('@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif+JP:wght@200..900&family=Petrona:ital,wght@0,100..900;1,100..900&display=swap');'); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .montserrat { font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; } .noto-serif-jp { font-family: 'Noto Serif JP', serif; font-optical-sizing: auto; font-style: normal; } .codebox { background-color: #a0a0a0 !important; padding: 12px !important; } .spoiler_title { color: #fff !important; font-size: 11px !important; } .spoiler_content { background-color: #b3b3b3 !important; color: #fff !important; font-weight: 500 !important; font-size: 10px !important; }</style><!--
+    return `<style>@import url('@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif+JP:wght@200..900&family=Petrona:ital,wght@0,100..900;1,100..900&display=swap');'); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .montserrat { font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; } .noto-serif-jp { font-family: 'Noto Serif JP', serif; font-optical-sizing: auto; font-style: normal; } .${
+      isDarkMode ? "dark" : "light"
+    } .codebox { background-color: ${
+      isDarkMode ? "#222327" : "#f5f5f5"
+    } !important; border: 1px solid ${
+      isDarkMode ? "#33353a" : "#e7e7ee"
+    } !important; padding: 12px !important; } .${
+      isDarkMode ? "dark" : "light"
+    } .spoiler_title { color: ${
+      isDarkMode ? "#fff" : "#000"
+    } !important; font-size: 11px !important; } .${
+      isDarkMode ? "dark" : "light"
+    } .spoiler_content { background-color: ${
+      isDarkMode ? "#2a2c33" : "#d6d6d6ff"
+    } !important; color: ${
+      isDarkMode ? "#fff" : "#000"
+    } !important; font-weight: 500 !important; font-size: 10px !important; }</style><!--
 
 --><div class="montserrat" style="max-width: ${
       fullWidth === true ? "800px" : "580px"
-    }; background: #f2f2f2; margin: 0 auto; color: #000; position: relative;"><!--
+    }; background: ${
+      isDarkMode ? "oklch(0.2223 0.006 271.1393)" : "#f2f2f2"
+    }; margin: 0 auto; color: ${
+      isDarkMode ? "#fff" : "#000"
+    }; position: relative;"><!--
 --><div style="position: relative; display: flex; justify-content: center; align-items: center; height: 220px; background-position: ${position} !important; background-size: cover !important; background: ${
       darkerBanner === true
         ? "linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), "
         : ""
     }url('${banner}'); filter: grayscale(${
       coloredBanner === true ? "0" : "90%"
-    });"><div style="position: absolute; bottom: 0; background: linear-gradient(360deg,rgba(242, 242, 242, 1) 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
+    });"><div style="position: absolute; bottom: 0; background: linear-gradient(360deg,${
+      isDarkMode ? "rgba(26, 27, 30, 1)" : "rgba(242, 242, 242, 1)"
+    } 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
 -->${
       bannerText === true
         ? `<div style="padding: 8px; text-shadow: 1px 1px #000; color: #fff; display: flex; flex-direction: column; text-align: center;"><span style="font-size: 14px; text-transform: uppercase;">${characterName}</span><span class="petrona" style="font-size: 24px;">${title}</span><span style="font-size: 12px;">${timeType} - ${year}</span></div>`
@@ -228,17 +257,27 @@ document.addEventListener("DOMContentLoaded", function () {
 --><div style="margin: 32px 40px;"><!--
 --><div style="margin: ${
       place !== "" ? "32px auto 16px" : "32px auto"
-    }; width: max-content; display: flex; align-items: center; gap: 16px;"><hr style="height: 1px; width: 180px; border-top-color: #000 !important;" /><span>∞</span><hr style="height: 1px; width: 180px; border-top-color: #000 !important;" /></div>${
+    }; width: max-content; display: flex; align-items: center; gap: 16px;"><hr style="height: 1px; width: 180px; border-top-color: ${
+      isDarkMode ? "#fff" : "#000"
+    } !important;" /><span>∞</span><hr style="height: 1px; width: 180px; border-top-color: ${
+      isDarkMode ? "#fff" : "#000"
+    } !important;" /></div>${
       place !== ""
         ? `<!--
 
 --><p class="${fontFamily}" style="font-size: ${
             Number(fontSize) + 1
-          }px; font-weight: 500; font-style: italic; text-align: center; color: #a0a0a0;">${place}.</p><hr style="height: 1px; width: 100px; border-top-color: #000!important; margin: 20px auto 32px;" />`
+          }px; font-weight: 500; font-style: italic; text-align: center; color: ${
+            isDarkMode ? "gray" : "#a0a0a0"
+          };">${place}.</p><hr style="height: 1px; width: 100px; border-top-color: ${
+            isDarkMode ? "#fff" : "#000"
+          } !important; margin: 20px auto 32px;" />`
         : ""
     }<!--
 
---><div class="${fontFamily}" style="font-size: ${fontSize}px; text-align: justify; margin: 0;">${content.replace(
+--><div class="${fontFamily} ${
+      isDarkMode ? "dark" : "light"
+    }" style="font-size: ${fontSize}px; text-align: justify; margin: 0;">${content.replace(
       /\n/g,
       "<br/>"
     )}</div><!--
@@ -247,7 +286,9 @@ document.addEventListener("DOMContentLoaded", function () {
       participants !== ""
         ? `<p class="${fontFamily}" style="margin-top: 40px; font-size: ${
             fontSize - 1
-          }px; font-style: italic; text-align: right; color: #a0a0a0; text-transform: lowercase;">feat. ${participants}.</p>`
+          }px; font-style: italic; text-align: right; color: ${
+            isDarkMode ? "gray" : "#a0a0a0"
+          }; text-transform: lowercase;">feat. ${participants}.</p>`
         : ""
     }</div><!-- 
 
