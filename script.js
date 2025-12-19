@@ -294,13 +294,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 --><p class="montserrat" style="text-align: center; font-size: ${
       fontFamily === "montserrat" ? Number(fontSize) - 1 : Number(fontSize) - 2
-    }px; font-weight: 400; padding-bottom: 40px; margin: 0;">Bourbon | バーボン</p><img src="${handleLogo(
-      logo
-    )}" alt="jolly roger" style="position: absolute; left: 16px; bottom: 16px; transform: rotate(-17deg); width: ${
-      participants !== "" ? "64px" : "48px"
-    }; border-radius: ${["jr", "jr-gray"].includes(logo) ? "100%" : "0"}; ${
-      logo === "jr-gray" ? "filter: grayscale(1);" : ""
-    }" /></div>`;
+    }px; font-weight: 400; padding-bottom: 40px; margin: 0;">Bourbon | バーボン</p>${
+      logo !== "none"
+        ? `<img src="${handleLogo(
+            logo
+          )}" alt="jolly roger" style="position: absolute; left: 16px; bottom: 16px; transform: rotate(-17deg); width: ${
+            participants !== "" ? "64px" : "48px"
+          }; border-radius: ${
+            ["jr", "jr-gray"].includes(logo) ? "100%" : "0"
+          }; ${logo === "jr-gray" ? "filter: grayscale(1);" : ""}" />`
+        : ""
+    }</div>`;
   };
 
   const convertHTMLtoBBCode = (htmlText) => {
