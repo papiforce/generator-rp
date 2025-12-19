@@ -214,23 +214,15 @@ document.addEventListener("DOMContentLoaded", function () {
 <p style="font-size: 12px; text-align: center;">Bourbon | バーボン</p>`;
     }
 
-    return `<style>@import url('@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif+JP:wght@200..900&family=Petrona:ital,wght@0,100..900;1,100..900&display=swap');'); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .montserrat { font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; } .noto-serif-jp { font-family: 'Noto Serif JP', serif; font-optical-sizing: auto; font-style: normal; } .${
-      isDarkMode ? "dark" : "light"
-    } .codebox { background-color: ${
-      isDarkMode ? "#222327" : "#f5f5f5"
-    } !important; border: 1px solid ${
-      isDarkMode ? "#33353a" : "#e7e7ee"
-    } !important; padding: 12px !important; } .${
-      isDarkMode ? "dark" : "light"
-    } .spoiler_title { color: ${
-      isDarkMode ? "#fff" : "#000"
-    } !important; font-size: 11px !important; } .${
-      isDarkMode ? "dark" : "light"
-    } .spoiler_content { background-color: ${
-      isDarkMode ? "#2a2c33" : "#d6d6d6ff"
-    } !important; color: ${
-      isDarkMode ? "#fff" : "#000"
-    } !important; font-weight: 500 !important; font-size: 10px !important; }</style><!--
+    return `<style>@import url('@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif+JP:wght@200..900&family=Petrona:ital,wght@0,100..900;1,100..900&display=swap');'); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .montserrat { font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; } .noto-serif-jp { font-family: 'Noto Serif JP', serif; font-optical-sizing: auto; font-style: normal; } ${
+      isDarkMode
+        ? `.dark .codebox { background-color: #222327 !important; border: 1px solid #33353a !important; padding: 12px !important; } .dark .spoiler_title { color: #fff !important; font-size: ${fontSize}px !important; } .dark .spoiler_content { background-color: #2a2c33 !important; color: #fff !important; font-size: ${
+            Number(fontSize) - 1
+          }px !important; font-weight: 500; } .dark speech { display: flex; gap: 8px; } .dark .speech { display: flex; gap: 8px; } .dark .speech img { object-fit: cover; object-position: center; min-width: 56px; max-width: 56px; height: 56px; border-radius: 50%; padding: 2px; } .dark .speech span { background-color: #2a2c33; border: 2px solid #33353a; font-weight: bold; padding: 8px 12px; width: 100%; }`
+        : `.light .codebox { background-color: #f5f5f5 !important; border: 1px solid #e7e7ee !important; padding: 12px !important; } .light .spoiler_title { color: #000 !important; font-size: ${fontSize}px !important; } .light .spoiler_content { background-color: #eaeaeaff !important; color: #000 !important; font-weight: 500; font-size: ${
+            Number(fontSize) - 1
+          }px !important; } .light speech { display: flex; gap: 8px; } .light .speech { display: flex; gap: 8px; } .light .speech img { object-fit: cover; object-position: center; min-width: 56px; max-width: 56px; height: 56px; border-radius: 50%; padding: 2px; } .light .speech span { background-color: #fff; border: 2px solid #e7e7ee; font-weight: bold; padding: 8px 12px; width: 100%; }`
+    }</style><!--
 
 --><div class="montserrat" style="max-width: ${
       fullWidth === true ? "800px" : "580px"
@@ -307,38 +299,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }</div>`;
   };
 
-  const convertHTMLtoBBCode = (htmlText) => {
-    return htmlText.replace(
-      /<span style="color:\s*([^;]+);\s*font-weight:\s*bold;">([^<]+)<\/span>/g,
-      "[color=$1][b]$2[/b][/color]"
-    );
-  };
-
-  const convertBBCodeToHTML = (bbcodeText) => {
-    return bbcodeText.replace(
-      /\[color=([^\]]+)\]\[b\]([^\[]+)\[\/b\]\[\/color\]/g,
-      '<span style="color: $1; font-weight: bold;">$2</span>'
-    );
-  };
-
   const updatePreview = () => {
     const code = generateCode();
-    document.getElementById("content").value = convertBBCodeToHTML(
-      document.getElementById("content").value
-    );
-    const contentWithHTML = convertBBCodeToHTML(
-      document.getElementById("content").value
-    );
 
     preview.innerHTML = code;
-
-    let codeWithBBCode = code;
-    const contentHTML = contentWithHTML;
-    const contentBBCode = convertHTMLtoBBCode(contentHTML);
-
-    codeWithBBCode = codeWithBBCode.replace(contentHTML, contentBBCode);
-
-    generatedCode.value = codeWithBBCode.replaceAll("<br/>", "\n");
+    generatedCode.value = code.replaceAll("<br/>", "\n");
   };
 
   const toggleFieldsByTemplate = () => {
@@ -391,6 +356,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
+  const handleCharacterImage = (character) => {
+    if (character === "civil")
+      return "https://i.pinimg.com/736x/a3/50/1e/a3501ea173c42bd83d4123dccb5917d8.jpg";
+
+    if (character === "pirate")
+      return "https://static.wikia.nocookie.net/onepiece/images/1/1a/Membres_Pirates_du_Roux_11_Portrait.png/revision/latest/scale-to-width-down/120?cb=20231029205730&path-prefix=fr";
+
+    if (character === "marine")
+      return "https://i.pinimg.com/736x/77/7a/df/777adf0a1bf32967934d958be513bd7b.jpg";
+
+    if (character === "cp")
+      return "https://static.wikia.nocookie.net/onepiece/images/c/c3/Partenaire_de_Who%27s-Who_Cipher_Pol_1_Portrait.png/revision/latest/scale-to-width-down/120?cb=20231029210543&path-prefix=fr";
+
+    if (["atout", "revolutionnaire"].includes(character))
+      return "https://static.wikia.nocookie.net/onepiece/images/9/98/Bunny_Joe_Anime_Infobox.png/revision/latest?cb=20130621023213&path-prefix=fr";
+
+    return "https://i.pinimg.com/1200x/c5/dd/07/c5dd07a26ae4249eebb6cbadbce14238.jpg";
+  };
+
+  const handleCharacterSpeech = (color, character, text) => {
+    return `<div class="dark speech" style="display: flex; gap: 8px;"><img src="${handleCharacterImage(
+      character
+    )}" alt="${character}" style="border: 2px solid ${color};" /><span style="color: ${color};">${text}</span></div>`;
+  };
+
   form.addEventListener("input", updatePreview);
   form.addEventListener("change", updatePreview);
 
@@ -419,7 +409,17 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const htmlCode = `<span style="color: ${color}; font-weight: bold;">${selectedText}</span>`;
+    const destructuredColor = color.split("-");
+    console.log(destructuredColor);
+
+    const htmlCode =
+      destructuredColor.length > 1
+        ? handleCharacterSpeech(
+            destructuredColor[0],
+            destructuredColor[1],
+            selectedText
+          )
+        : `<span style="color: ${color}; font-weight: bold;">${selectedText}</span>`;
 
     const beforeText = contentTextarea.value.substring(0, selectionStart);
     const afterText = contentTextarea.value.substring(selectionEnd);
