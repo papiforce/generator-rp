@@ -357,6 +357,30 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const handleCharacterImage = (character) => {
+    if (character === "tyr")
+      return "https://i.pinimg.com/736x/12/c0/80/12c080b695d53b8f9bbf4da5e41c03d3.jpg";
+
+    if (character === "sonya")
+      return "https://i.pinimg.com/736x/37/48/46/374846ec6b5e91795344f2b8f386d98c.jpg";
+
+    if (character === "jeshaaySerpent")
+      return "https://media.discordapp.net/attachments/1159175765930295336/1404455438522777681/8ed06b5bc4191f8d8b748edf05fffcfd.png?ex=69474c4e&is=6945face&hm=4602b1cd2d1a9df3c4364b6efdd92459c8532366fe503ea8173d800baa4fb2f4&=&format=webp&quality=lossless&width=1312&height=1546";
+
+    if (character === "jeshaayHybride")
+      return "https://media.discordapp.net/attachments/1159175765930295336/1404455437797036042/7fefc0a41a064f95a6d251f4f8847727.png?ex=69474c4d&is=6945facd&hm=7b505fae0befd79e547fc427db9024d4cc9e7b42dfefa0da8183ec4f15103ae6&=&format=webp&quality=lossless&width=1252&height=1546";
+
+    if (character === "lem")
+      return "https://2img.net/u/3112/10/25/15/avatars/5462-79.jpg";
+
+    if (character === "nicoeliza")
+      return "https://sig.grumpybumpers.com/host/poetryisgood.gif";
+
+    if (character === "velvet")
+      return "https://sig.grumpybumpers.com/host/poetryisamazing.gif";
+
+    if (character === "lorelei")
+      return "https://2img.net/i.imgur.com/tUg6xD3.png";
+
     if (character === "civil")
       return "https://i.pinimg.com/736x/a3/50/1e/a3501ea173c42bd83d4123dccb5917d8.jpg";
 
@@ -368,6 +392,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (character === "cp")
       return "https://static.wikia.nocookie.net/onepiece/images/c/c3/Partenaire_de_Who%27s-Who_Cipher_Pol_1_Portrait.png/revision/latest/scale-to-width-down/120?cb=20231029210543&path-prefix=fr";
+
+    if (character === "chasseur")
+      return "https://static.wikia.nocookie.net/onepiece/images/5/5c/Daddy_Masterson_Anime_Infobox.png/revision/latest/smart/width/250/height/250?cb=20180311174550&path-prefix=fr";
 
     if (["atout", "revolutionnaire"].includes(character))
       return "https://static.wikia.nocookie.net/onepiece/images/9/98/Bunny_Joe_Anime_Infobox.png/revision/latest?cb=20130621023213&path-prefix=fr";
