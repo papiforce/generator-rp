@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     Suspendisse vestibulum mi vel posuere lobortis. Nunc vitae turpis in libero consectetur pulvinar. Morbi arcu velit, posuere pellentesque neque eu, aliquam iaculis libero. Aenean nec faucibus diam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas aliquam vehicula risus eget efficitur. Vestibulum vehicula lacus quis semper imperdiet. Curabitur urna tortor, sagittis eget diam vitae, finibus placerat dui. Maecenas ac enim ut nunc porta maximus non a neque. Integer ac nibh sem. Integer eu dapibus ante. Proin ullamcorper est est, nec rhoncus odio placerat a. Cras ut augue maximus, facilisis turpis sit amet, condimentum eros. Integer malesuada nec ipsum non ultrices. Curabitur quis nisi at enim ornare pretium. Phasellus sed augue nunc..`,
     logo: "jr",
+    firstLetter: false,
   };
 
   const loadSavedData = () => {
@@ -195,6 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
       )
       .join("");
     const logo = document.getElementById("logo").value;
+    const firstLetter = document.getElementById("firstLetter").checked;
 
     if (template === "1") {
       return `<style>
@@ -215,6 +217,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     return `<style>@import url('@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif+JP:wght@200..900&family=Petrona:ital,wght@0,100..900;1,100..900&display=swap');'); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .montserrat { font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; } .noto-serif-jp { font-family: 'Noto Serif JP', serif; font-optical-sizing: auto; font-style: normal; } ${
+      firstLetter
+        ? ".firstLetter::first-letter { -webkit-initial-letter: 3; initial-letter: 3; font-weight: bold; margin-right: .5em; }"
+        : ""
+    } ${
       isDarkMode
         ? `.dark .codebox { background-color: #222327 !important; border: 1px solid #33353a !important; padding: 12px !important; } .dark .spoiler_title { color: #fff !important; font-size: ${fontSize}px !important; } .dark .spoiler_content { background-color: #2a2c33 !important; color: #fff !important; font-size: ${
             Number(fontSize) - 1
@@ -267,8 +273,8 @@ document.addEventListener("DOMContentLoaded", function () {
         : ""
     }<!--
 
---><div class="${fontFamily} ${
-      isDarkMode ? "dark" : "light"
+--><div class="${fontFamily} ${isDarkMode ? "dark" : "light"} ${
+      firstLetter ? "firstLetter" : ""
     }" style="font-size: ${fontSize}px; text-align: justify; margin: 0;">${content.replace(
       /\n/g,
       "<br/>"
