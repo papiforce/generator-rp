@@ -399,7 +399,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (["atout", "revolutionnaire"].includes(character))
       return "https://static.wikia.nocookie.net/onepiece/images/9/98/Bunny_Joe_Anime_Infobox.png/revision/latest?cb=20130621023213&path-prefix=fr";
 
-    return "https://i.pinimg.com/1200x/c5/dd/07/c5dd07a26ae4249eebb6cbadbce14238.jpg";
+    return "https://i.pinimg.com/736x/b8/00/56/b8005680164e0bf4760f94fb9a3780dd.jpg";
   };
 
   const handleCharacterSpeech = (color, character, text) => {
