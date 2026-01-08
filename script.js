@@ -1,4 +1,168 @@
 // ==========================================
+// THEME MANAGEMENT
+// ==========================================
+
+/**
+ * Gère le thème de l'application
+ */
+const ThemeManager = {
+  // Clé de stockage localStorage
+  STORAGE_KEY: "rpGeneratorTheme",
+
+  // Images des icônes
+  ICONS: {
+    light: "assets/full-moon.png", // Lune pour mode sombre
+    dark: "assets/sun.png", // Soleil pour mode clair
+  },
+
+  /**
+   * Initialise le gestionnaire de thème
+   */
+  init() {
+    console.log("🎨 Initialisation du gestionnaire de thème");
+
+    // Récupère le thème sauvegardé ou détecte la préférence système
+    const savedTheme = this.getSavedTheme();
+    const systemTheme = this.getSystemTheme();
+    const initialTheme = savedTheme || systemTheme;
+
+    // Applique le thème initial
+    this.setTheme(initialTheme, false);
+
+    // Initialise le bouton
+    this.initButton();
+
+    // Écoute les changements de préférence système
+    this.watchSystemTheme();
+
+    console.log(`✅ Thème initialisé: ${initialTheme}`);
+  },
+
+  /**
+   * Récupère le thème sauvegardé
+   */
+  getSavedTheme() {
+    return localStorage.getItem(this.STORAGE_KEY);
+  },
+
+  /**
+   * Sauvegarde le thème
+   */
+  saveTheme(theme) {
+    localStorage.setItem(this.STORAGE_KEY, theme);
+    console.log(`💾 Thème sauvegardé: ${theme}`);
+  },
+
+  /**
+   * Détecte la préférence système
+   */
+  getSystemTheme() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  },
+
+  /**
+   * Récupère le thème actuel
+   */
+  getCurrentTheme() {
+    return document.documentElement.getAttribute("data-theme") || "light";
+  },
+
+  /**
+   * Applique un thème
+   */
+  setTheme(theme, save = true) {
+    console.log(`🎨 Application du thème: ${theme}`);
+
+    // Applique l'attribut data-theme
+    document.documentElement.setAttribute("data-theme", theme);
+
+    // Met à jour l'icône du bouton
+    this.updateButtonIcon(theme);
+
+    // Sauvegarde si demandé
+    if (save) {
+      this.saveTheme(theme);
+    }
+  },
+
+  /**
+   * Bascule entre les thèmes
+   */
+  toggleTheme() {
+    const currentTheme = this.getCurrentTheme();
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+
+    console.log(`🔄 Basculement: ${currentTheme} → ${newTheme}`);
+
+    // Animation de rotation
+    const btn = getElement("themeBtn");
+    if (btn) {
+      btn.classList.add("rotating");
+      setTimeout(() => btn.classList.remove("rotating"), 500);
+    }
+
+    this.setTheme(newTheme);
+  },
+
+  /**
+   * Met à jour l'icône du bouton
+   */
+  updateButtonIcon(theme) {
+    const btn = getElement("themeBtn");
+    const img = btn?.querySelector("img");
+
+    if (img) {
+      // Affiche la lune en mode clair (pour activer le mode sombre)
+      // Affiche le soleil en mode sombre (pour activer le mode clair)
+      img.src = theme === "light" ? this.ICONS.light : this.ICONS.dark;
+      img.alt =
+        theme === "light" ? "Activer le mode sombre" : "Activer le mode clair";
+    }
+  },
+
+  /**
+   * Initialise le bouton de thème
+   */
+  initButton() {
+    const btn = document.querySelector(".themeBtn");
+
+    if (!btn) {
+      console.warn("⚠️ Bouton de thème introuvable");
+      return;
+    }
+
+    // Ajoute un ID pour faciliter l'accès
+    btn.id = "themeBtn";
+
+    // Ajoute l'événement de clic
+    btn.addEventListener("click", () => this.toggleTheme());
+
+    // Ajoute un titre au survol
+    btn.title = "Changer le thème";
+
+    console.log("✅ Bouton de thème initialisé");
+  },
+
+  /**
+   * Écoute les changements de préférence système
+   */
+  watchSystemTheme() {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    mediaQuery.addEventListener("change", (e) => {
+      // Ne change que si l'utilisateur n'a pas défini de préférence
+      if (!this.getSavedTheme()) {
+        const newTheme = e.matches ? "dark" : "light";
+        console.log(`🌓 Préférence système changée: ${newTheme}`);
+        this.setTheme(newTheme, false);
+      }
+    });
+  },
+};
+
+// ==========================================
 // CONSTANTS
 // ==========================================
 
@@ -730,6 +894,9 @@ function initializeSaveButton() {
  * Initialise l'application
  */
 function initializeApp() {
+  // Initialise le gestionnaire de thème EN PREMIER
+  ThemeManager.init();
+
   // Charge les données sauvegardées
   loadAndApplyData();
 
