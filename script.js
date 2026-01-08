@@ -19,8 +19,6 @@ const ThemeManager = {
    * Initialise le gestionnaire de thème
    */
   init() {
-    console.log("🎨 Initialisation du gestionnaire de thème");
-
     // Récupère le thème sauvegardé ou détecte la préférence système
     const savedTheme = this.getSavedTheme();
     const systemTheme = this.getSystemTheme();
@@ -34,8 +32,6 @@ const ThemeManager = {
 
     // Écoute les changements de préférence système
     this.watchSystemTheme();
-
-    console.log(`✅ Thème initialisé: ${initialTheme}`);
   },
 
   /**
@@ -50,7 +46,6 @@ const ThemeManager = {
    */
   saveTheme(theme) {
     localStorage.setItem(this.STORAGE_KEY, theme);
-    console.log(`💾 Thème sauvegardé: ${theme}`);
   },
 
   /**
@@ -73,8 +68,6 @@ const ThemeManager = {
    * Applique un thème
    */
   setTheme(theme, save = true) {
-    console.log(`🎨 Application du thème: ${theme}`);
-
     // Applique l'attribut data-theme
     document.documentElement.setAttribute("data-theme", theme);
 
@@ -93,8 +86,6 @@ const ThemeManager = {
   toggleTheme() {
     const currentTheme = this.getCurrentTheme();
     const newTheme = currentTheme === "light" ? "dark" : "light";
-
-    console.log(`🔄 Basculement: ${currentTheme} → ${newTheme}`);
 
     // Animation de rotation
     const btn = getElement("themeBtn");
@@ -141,8 +132,6 @@ const ThemeManager = {
 
     // Ajoute un titre au survol
     btn.title = "Changer le thème";
-
-    console.log("✅ Bouton de thème initialisé");
   },
 
   /**
@@ -155,7 +144,6 @@ const ThemeManager = {
       // Ne change que si l'utilisateur n'a pas défini de préférence
       if (!this.getSavedTheme()) {
         const newTheme = e.matches ? "dark" : "light";
-        console.log(`🌓 Préférence système changée: ${newTheme}`);
         this.setTheme(newTheme, false);
       }
     });
@@ -631,7 +619,7 @@ function updatePreview() {
   const generatedCode = getElement("generatedCode");
 
   if (preview) preview.innerHTML = html;
-  if (generatedCode) generatedCode.value = html;
+  if (generatedCode) generatedCode.value = html.replaceAll("<br/>", "\n");
 }
 
 /**
