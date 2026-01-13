@@ -169,6 +169,7 @@ const DEFAULT_VALUES = {
   bannerText: true,
   characterName: "Nom du Personnage",
   title: "Titre ici",
+  hideTemporality: false,
   timeType: "PRÉSENT",
   year: "1630",
   place: "",
@@ -343,6 +344,10 @@ function applyDataToForm(data) {
     data.characterName || DEFAULT_VALUES.characterName
   );
   setElementValue("logo", data.logo || DEFAULT_VALUES.logo);
+  setElementChecked(
+    "hideTemporality",
+    data.hideTemporality || DEFAULT_VALUES.hideTemporality
+  );
 }
 
 /**
@@ -416,7 +421,7 @@ function generateTemplate1(data) {
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 </style>
 <div style="background: url('${background}'); background-size: cover; padding: 20px; border-radius: 8px; max-width: ${
-    fullWidth === true ? "800px" : "720px"
+    fullWidth ? "800px" : "720px"
   }; margin: 0 auto;"><div style="position: relative; display: flex; gap: 16px; height: 200px;"><img src="${banner}" style="width: 100%; max-width: 464px; object-fit: cover; object-position: ${position}; border-radius: 12px 12px 0 0;" /><img src="${handleLogo(
     logo
   )}" style="max-width: 240px; max-height: 200px; ${
@@ -452,6 +457,7 @@ function generateTemplate2(data) {
     timeType,
     title,
     year,
+    hideTemporality,
   } = data;
 
   const withFirstLetterBig = firstLetter
@@ -467,18 +473,16 @@ function generateTemplate2(data) {
       }px !important; } .light speech { display: flex; gap: 8px; } .light .speech { display: flex; gap: 8px; } .light .speech img { object-fit: cover; object-position: center; min-width: 56px; max-width: 56px; height: 56px; border-radius: 50%; padding: 2px; } .light .speech span { background-color: #fff; border: 2px solid #e7e7ee; font-weight: bold; padding: 8px 12px; width: 100%; }`;
 
   const globalStyle = `max-width: ${
-    fullWidth === true ? "800px" : "580px"
+    fullWidth ? "800px" : "580px"
   }; background: ${
     darkMode ? "oklch(0.2223 0.006 271.1393)" : "#f2f2f2"
   }; margin: 0 auto; color: ${darkMode ? "#fff" : "#000"};`;
 
   const bannerStyle = `background-position: ${position} !important; background: ${
-    darkerBanner === true
+    darkerBanner
       ? "linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), "
       : ""
-  }url('${banner}'); filter: grayscale(${
-    coloredBanner === true ? "0" : "90%"
-  });`;
+  }url('${banner}'); filter: grayscale(${coloredBanner ? "0" : "90%"});`;
 
   return `<style>@import url('@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif+JP:wght@200..900&family=Petrona:ital,wght@0,100..900;1,100..900&display=swap');'); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .montserrat { font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; } .noto-serif-jp { font-family: 'Noto Serif JP', serif; font-optical-sizing: auto; font-style: normal; }${theme}${withFirstLetterBig}</style><!--
 
@@ -488,7 +492,11 @@ function generateTemplate2(data) {
   } 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
 -->${
     bannerText
-      ? `<div style="padding: 8px; text-shadow: 1px 1px #000; color: #fff; display: flex; flex-direction: column; text-align: center;"><span style="font-size: 14px; text-transform: uppercase;">${characterName}</span><span class="petrona" style="font-size: 24px;">${title}</span><span style="font-size: 12px;">${timeType} - ${year}</span></div>`
+      ? `<div style="padding: 8px; text-shadow: 1px 1px #000; color: #fff; display: flex; flex-direction: column; text-align: center;"><span style="font-size: 14px; text-transform: uppercase;">${characterName}</span><span class="petrona" style="font-size: 24px;">${title}</span>${
+          hideTemporality
+            ? ""
+            : `<span style="font-size: 12px;">${timeType} - ${year}</span>`
+        }</div>`
       : ""
   }</div><!-- 
 
@@ -550,10 +558,9 @@ function generateTemplate2(data) {
  */
 function generateTemplateHTML(templateNumber, data) {
   switch (templateNumber) {
-    case "1":
-      return generateTemplate1(data);
     case "2":
       return generateTemplate2(data);
+    case "1":
     default:
       return generateTemplate1(data);
   }
@@ -597,6 +604,8 @@ function updatePreview() {
     characterName:
       getElementValue("characterName") || DEFAULT_VALUES.characterName,
     title: getElementValue("title") || DEFAULT_VALUES.title,
+    hideTemporality:
+      getElementChecked("hideTemporality") || DEFAULT_VALUES.hideTemporality,
     timeType: getElementValue("timeType"),
     year: getElementValue("year") || DEFAULT_VALUES.year,
     place: getElementValue("place") || DEFAULT_VALUES.place,
@@ -643,6 +652,7 @@ function toggleFieldsByTemplate() {
     "fontSize",
     "firstLetter",
     "place",
+    "hideTemporality",
   ];
 
   template1Fields.forEach((fieldId) => {
@@ -841,6 +851,31 @@ function initializeBannerTextToggle() {
 }
 
 /**
+ * Initialise le toggle du texte de temporalité
+ */
+function initializeTemporalityText() {
+  const temporalityCheckbox = getElement("hideTemporality");
+  if (!temporalityCheckbox) return;
+
+  temporalityCheckbox.addEventListener("change", () => {
+    const isChecked = temporalityCheckbox.checked;
+    const fieldsToToggle = ["timeType", "year"];
+
+    fieldsToToggle.forEach((fieldId) => {
+      const field = getElement(fieldId);
+      if (field) {
+        const formGroup = field.closest(".form-group");
+        if (formGroup) {
+          formGroup.style.display = isChecked ? "block" : "none";
+        }
+      }
+    });
+
+    updatePreview();
+  });
+}
+
+/**
  * Initialise le bouton de copie
  */
 function initializeCopyButton() {
@@ -898,6 +933,7 @@ function initializeApp() {
   initializeFormEvents();
   initializeTemplateChange();
   initializeBannerTextToggle();
+  initializeTemporalityText();
   initializeCopyButton();
   initializeSaveButton();
   initializeTextSelection();
