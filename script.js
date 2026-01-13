@@ -866,7 +866,7 @@ function initializeTemporalityText() {
       if (field) {
         const formGroup = field.closest(".form-group");
         if (formGroup) {
-          formGroup.style.display = isChecked ? "block" : "none";
+          formGroup.style.display = isChecked ? "none" : "block";
         }
       }
     });
