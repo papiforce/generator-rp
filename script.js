@@ -52,8 +52,8 @@ const ThemeManager = {
    * Détecte la préférence système
    */
   getSystemTheme() {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ?
+        "dark"
       : "light";
   },
 
@@ -330,23 +330,23 @@ function applyDataToForm(data) {
   setElementValue("position", data.position || DEFAULT_VALUES.position);
   setElementChecked(
     "darkerBanner",
-    data.darkerBanner || DEFAULT_VALUES.darkerBanner
+    data.darkerBanner || DEFAULT_VALUES.darkerBanner,
   );
   setElementChecked(
     "coloredBanner",
-    data.coloredBanner || DEFAULT_VALUES.coloredBanner
+    data.coloredBanner || DEFAULT_VALUES.coloredBanner,
   );
   setElementValue("fontFamily", data.fontFamily || DEFAULT_VALUES.fontFamily);
   setElementValue("fontSize", data.fontSize || DEFAULT_VALUES.fontSize);
   setElementChecked("bannerText", data.bannerText || DEFAULT_VALUES.bannerText);
   setElementValue(
     "characterName",
-    data.characterName || DEFAULT_VALUES.characterName
+    data.characterName || DEFAULT_VALUES.characterName,
   );
   setElementValue("logo", data.logo || DEFAULT_VALUES.logo);
   setElementChecked(
     "hideTemporality",
-    data.hideTemporality || DEFAULT_VALUES.hideTemporality
+    data.hideTemporality || DEFAULT_VALUES.hideTemporality,
   );
 }
 
@@ -413,7 +413,7 @@ function generateTemplate1(data) {
     .filter((p) => p.trim())
     .map(
       (p) =>
-        `<p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 2px;">${p.trim()}</p>`
+        `<p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 2px;">${p.trim()}</p>`,
     )
     .join("");
 
@@ -423,13 +423,13 @@ function generateTemplate1(data) {
 <div style="background: url('${background}'); background-size: cover; padding: 20px; border-radius: 8px; max-width: ${
     fullWidth ? "800px" : "720px"
   }; margin: 0 auto;"><div style="position: relative; display: flex; gap: 16px; height: 200px;"><img src="${banner}" style="width: 100%; max-width: 464px; object-fit: cover; object-position: ${position}; border-radius: 12px 12px 0 0;" /><img src="${handleLogo(
-    logo
+    logo,
   )}" style="max-width: 240px; max-height: 200px; ${
     logo === "jr-gray" ? "filter: grayscale(100%);" : ""
   }" /><span style="font-size: 40px; font-style: italic; text-shadow: 1px 1px 2px black; position: absolute; bottom: -32px; left: 50%; transform: translateX(-50%); color: white; white-space: nowrap;">${characterName}</span></div>
 <div style="margin-top: 24px; display: flex; gap: 16px;"><div style="min-width: 180px; display: flex; flex-direction: column;"><p style="text-align: center; font-size: 16px; color: white;">Informations</p><hr style="border: 1px solid white; margin: 0 0 12px;"/><div style="font-family: 'Raleway', sans-serif;"><p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 2px; text-transform: uppercase;">${timeType}</p><p style="text-align: center; color: white; background: black; border-radius: 4px; padding: 4px; font-size: 10px; margin-bottom: 24px;">${year}</p></div><p style="text-align: center; font-size: 16px; color: white;">Participants</p><hr style="border: 1px solid white; margin: 0 0 12px;"/><div style="font-family: 'Raleway', sans-serif;">${participantsList}</div></div><div style="font-family: 'Raleway', sans-serif; font-size: ${fontSize}px; text-align: justify; padding: 40px 32px; color: black; background: white; border-radius: 8px; max-height: 656px; overflow: scroll; width: 100%;">${content.replace(
     /\n/g,
-    "<br/>"
+    "<br/>",
   )}</div></div></div>
 <p style="font-size: 12px; text-align: center;">Bourbon | バーボン</p>`;
 }
@@ -460,12 +460,14 @@ function generateTemplate2(data) {
     hideTemporality,
   } = data;
 
-  const withFirstLetterBig = firstLetter
-    ? ".firstLetter::first-letter { -webkit-initial-letter: 3; initial-letter: 3; font-weight: bold; margin-right: .5em; }"
+  const withFirstLetterBig =
+    firstLetter ?
+      ".firstLetter::first-letter { -webkit-initial-letter: 3; initial-letter: 3; font-weight: bold; margin-right: .5em; }"
     : "";
 
-  const theme = darkMode
-    ? `.dark .codebox { background-color: #222327 !important; border: 1px solid #33353a !important; padding: 12px !important; } .dark .spoiler_title { color: #fff !important; font-size: ${fontSize}px !important; } .dark .spoiler_content { background-color: #2a2c33 !important; color: #fff !important; font-size: ${
+  const theme =
+    darkMode ?
+      `.dark .codebox { background-color: #222327 !important; border: 1px solid #33353a !important; padding: 12px !important; } .dark .spoiler_title { color: #fff !important; font-size: ${fontSize}px !important; } .dark .spoiler_content { background-color: #2a2c33 !important; color: #fff !important; font-size: ${
         Number(fontSize) - 1
       }px !important; font-weight: 500; } .dark speech { display: flex; gap: 8px; } .dark .speech { display: flex; gap: 8px; } .dark .speech img { object-fit: cover; object-position: center; min-width: 56px; max-width: 56px; height: 56px; border-radius: 50%; padding: 2px; } .dark .speech span { background-color: #2a2c33; border: 2px solid #33353a; font-weight: bold; padding: 8px 12px; width: 100%; }`
     : `.light .codebox { background-color: #f5f5f5 !important; border: 1px solid #e7e7ee !important; padding: 12px !important; } .light .spoiler_title { color: #000 !important; font-size: ${fontSize}px !important; } .light .spoiler_content { background-color: #eaeaeaff !important; color: #000 !important; font-weight: 500; font-size: ${
@@ -479,77 +481,77 @@ function generateTemplate2(data) {
   }; margin: 0 auto; color: ${darkMode ? "#fff" : "#000"};`;
 
   const bannerStyle = `background-position: ${position} !important; background: ${
-    darkerBanner
-      ? "linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), "
-      : ""
+    darkerBanner ?
+      "linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), "
+    : ""
   }url('${banner}'); filter: grayscale(${coloredBanner ? "0" : "90%"});`;
 
-  return `<style>@import url('@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif+JP:wght@200..900&family=Petrona:ital,wght@0,100..900;1,100..900&display=swap');'); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .montserrat { font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; } .noto-serif-jp { font-family: 'Noto Serif JP', serif; font-optical-sizing: auto; font-style: normal; }${theme}${withFirstLetterBig}</style><!--
+  return `<style>@import url('@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif+JP:wght@200..900&family=Petrona:ital,wght@0,100..900;1,100..900&display=swap');'); .petrona { font-family: 'Petrona', serif; font-optical-sizing: auto; font-style: normal; } .montserrat { font-family: 'Montserrat', sans-serif; font-optical-sizing: auto; font-style: normal; } .noto-serif-jp { font-family: 'Noto Serif JP', serif; font-optical-sizing: auto; font-style: normal; } .contentWrapper { margin: 32px 40px; } .separator { width: max-content; display: flex; align-items: center; gap: 16px; } ${theme}${withFirstLetterBig} @media (max-width: 720px) { .contentWrapper { margin: 8px 16px 32px; } .separator { width: 80%; } }</style><!--
 
 --><div class="montserrat" style="position: relative;${globalStyle}"><!--
 --><div style="position: relative; display: flex; justify-content: center; align-items: center; height: 220px; background-size: cover !important;${bannerStyle}"><div style="position: absolute; bottom: 0; background: linear-gradient(360deg,${
     darkMode ? "rgba(26, 27, 30, 1)" : "rgba(242, 242, 242, 1)"
   } 0%, rgba(242, 242, 242, 0) 100%); width: 100%; height: 72px;"></div><!--
 -->${
-    bannerText
-      ? `<div style="padding: 8px; text-shadow: 1px 1px #000; color: #fff; display: flex; flex-direction: column; text-align: center;"><span style="font-size: 14px; text-transform: uppercase;">${characterName}</span><span class="petrona" style="font-size: 24px;">${title}</span>${
-          hideTemporality
-            ? ""
-            : `<span style="font-size: 12px;">${timeType} - ${year}</span>`
-        }</div>`
-      : ""
+    bannerText ?
+      `<div style="padding: 8px; text-shadow: 1px 1px #000; color: #fff; display: flex; flex-direction: column; text-align: center;"><span style="font-size: 14px; text-transform: uppercase;">${characterName}</span><span class="petrona" style="font-size: 24px;">${title}</span>${
+        hideTemporality ? "" : (
+          `<span style="font-size: 12px;">${timeType} - ${year}</span>`
+        )
+      }</div>`
+    : ""
   }</div><!-- 
 
---><div style="margin: 32px 40px;"><!--
---><div style="margin: ${
+--><div class="contentWrapper"><!--
+--><div class="separator" style="margin: ${
     place !== "" ? "32px auto 16px" : "32px auto"
-  }; width: max-content; display: flex; align-items: center; gap: 16px;"><hr style="height: 1px; width: 180px; border-top-color: ${
+  };"><hr style="height: 1px; width: 180px; border-top-color: ${
     darkMode ? "#fff" : "#000"
   } !important;" /><span>∞</span><hr style="height: 1px; width: 180px; border-top-color: ${
     darkMode ? "#fff" : "#000"
   } !important;" /></div>${
-    place !== ""
-      ? `<!--
+    place !== "" ?
+      `<!--
 
 --><p class="${fontFamily}" style="font-size: ${
-          Number(fontSize) + 1
-        }px; font-weight: 500; font-style: italic; text-align: center; color: ${
-          darkMode ? "gray" : "#a0a0a0"
-        };">${place}.</p><hr style="height: 1px; width: 100px; border-top-color: ${
-          darkMode ? "#fff" : "#000"
-        } !important; margin: 20px auto 32px;" />`
-      : ""
+        Number(fontSize) + 1
+      }px; font-weight: 500; font-style: italic; text-align: center; color: ${
+        darkMode ? "gray" : "#a0a0a0"
+      };">${place}.</p><hr style="height: 1px; width: 100px; border-top-color: ${
+        darkMode ? "#fff" : "#000"
+      } !important; margin: 20px auto 32px;" />`
+    : ""
   }<!--
 
 --><div class="${fontFamily} ${darkMode ? "dark" : "light"} ${
     firstLetter ? "firstLetter" : ""
   }" style="font-size: ${fontSize}px; text-align: justify; margin: 0;">${content.replace(
     /\n/g,
-    "<br/>"
+    "<br/>",
   )}</div><!--
 
 -->${
-    participants !== ""
-      ? `<p class="${fontFamily}" style="margin-top: 40px; font-size: ${
-          fontSize - 1
-        }px; font-style: italic; text-align: right; color: ${
-          darkMode ? "gray" : "#a0a0a0"
-        }; text-transform: lowercase;">feat. ${participants}.</p>`
-      : ""
+    participants !== "" ?
+      `<p class="${fontFamily}" style="margin-top: 40px; font-size: ${
+        fontSize - 1
+      }px; font-style: italic; text-align: right; color: ${
+        darkMode ? "gray" : "#a0a0a0"
+      }; text-transform: lowercase;">feat. ${participants}.</p>`
+    : ""
   }</div><!-- 
 
 --><p class="montserrat" style="text-align: center; font-size: ${
     fontFamily === "montserrat" ? Number(fontSize) - 1 : Number(fontSize) - 2
   }px; font-weight: 400; padding-bottom: 40px; margin: 0;">Bourbon | バーボン</p>${
-    logo !== "none"
-      ? `<img src="${handleLogo(
-          logo
-        )}" alt="jolly roger" style="position: absolute; left: 16px; bottom: 16px; transform: rotate(-17deg); width: ${
-          participants !== "" ? "64px" : "48px"
-        }; border-radius: ${["jr", "jr-gray"].includes(logo) ? "100%" : "0"}; ${
-          logo === "jr-gray" ? "filter: grayscale(1);" : ""
-        }" />`
-      : ""
+    logo !== "none" ?
+      `<img src="${handleLogo(
+        logo,
+      )}" alt="jolly roger" style="position: absolute; left: 16px; bottom: 16px; transform: rotate(-17deg); width: ${
+        participants !== "" ? "64px" : "48px"
+      }; border-radius: ${["jr", "jr-gray"].includes(logo) ? "100%" : "0"}; ${
+        logo === "jr-gray" ? "filter: grayscale(1);" : ""
+      }" />`
+    : ""
   }</div>`;
 }
 
@@ -772,13 +774,13 @@ function initializeTextSelection() {
     const destructuredColor = color.split("-");
 
     const htmlCode =
-      destructuredColor.length > 1
-        ? handleCharacterSpeech(
-            destructuredColor[1],
-            destructuredColor[0],
-            selectedText
-          )
-        : `<span style="color: ${color}; font-weight: bold;">${selectedText}</span>`;
+      destructuredColor.length > 1 ?
+        handleCharacterSpeech(
+          destructuredColor[1],
+          destructuredColor[0],
+          selectedText,
+        )
+      : `<span style="color: ${color}; font-weight: bold;">${selectedText}</span>`;
 
     const beforeText = contentTextarea.value.substring(0, selectionStart);
     const afterText = contentTextarea.value.substring(selectionEnd);
